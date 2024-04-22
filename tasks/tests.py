@@ -65,3 +65,17 @@ class TaskFormTest(TestCase):
         self.assertFalse(form.is_valid())
         self.assertEqual(len(form.errors), 1)
 
+
+class TaskUpdateTest(TestCase):
+    def setUp(self):
+        self.task = Task.objects.create(title="Test Task", description="Update Test Description", completed=True)
+
+    def test_task_update_view(self):
+        response = self.client.post(reverse('task_update', args=[self.task.id]), {
+            'title': "Updated Title",
+            'description': self.task.description,
+            'completed': self.task.completed
+        })
+        self.assertEqual(response.status_code, 302)
+        self.task.refresh_from_db()
+        self.assertEqual(self.task.title, "Updated Title")
