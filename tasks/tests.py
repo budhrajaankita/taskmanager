@@ -38,14 +38,15 @@ class TaskListViewTest(TestCase):
         self.assertIn('List View Task', response.content.decode())
 
 
+class TaskFormTest(TestCase):
+    def test_valid_data(self):
+        form = TaskForm({
+            'title': "Form Validity",
+            'description': "Test form Validity",
+            'completed': False
+        })
+        self.assertTrue(form.is_valid())
 
-
-
-# class TaskFormTest(TestCase):
-#     def test_form_validity(self):
-#         form_data = {'title': 'New Task', 'description': 'Do something', 'completed': False}
-#         form = TaskForm(data=form_data)
-#         self.assertTrue(form.is_valid())
 #         form.save()
 #         self.assertEqual(Task.objects.count(), 1)
 
