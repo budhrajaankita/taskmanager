@@ -79,3 +79,13 @@ class TaskUpdateTest(TestCase):
         self.assertEqual(response.status_code, 302)
         self.task.refresh_from_db()
         self.assertEqual(self.task.title, "Updated Title")
+
+class TaskDeleteTest(TestCase):
+    def setUp(self):
+        self.task = Task.objects.create(title="Delete Test Task", description="Delete Test Description", completed=False)
+
+    def test_task_delete_view(self):
+        self.assertEqual(Task.objects.count(), 1)
+        response = self.client.post(reverse('task_delete', args=[self.task.id]))
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(Task.objects.count(), 0)
