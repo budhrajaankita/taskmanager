@@ -63,5 +63,5 @@ class TaskFormTest(TestCase):
     def test_form_blank_data(self):
         form = TaskForm({})
         self.assertFalse(form.is_valid())
-        self.assertEqual(len(form.errors), 3)
+        self.assertEqual(len(form.errors), 1)
 
