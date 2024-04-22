@@ -46,7 +46,16 @@ class TaskFormTest(TestCase):
             'completed': False
         })
         self.assertTrue(form.is_valid())
-
 #         form.save()
 #         self.assertEqual(Task.objects.count(), 1)
+
+    def test_taskcount(self):
+        form = TaskForm({
+            'title': "Task count",
+            'description': "Test task count increase",
+            'completed': False
+        })
+        self.assertTrue(form.is_valid())
+        form.save()
+        self.assertEqual(Task.objects.count(), 1)
 
