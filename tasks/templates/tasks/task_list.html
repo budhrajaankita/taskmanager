@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            background-color: #fefefe;
+            color: #333;
+        }
+        h1 {
+            color: #5d647b;
+             /* #071a58; */
+            text-align-last: center;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 10px 15px;
+            margin-bottom: 8px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        a {
+            color: #73a800;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        form {
+            display: inline;
+        }
+        button, input[type="submit"] {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 6px 12px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover, input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .task-controls a {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Task List</h1>
+    <a href="{% url 'task_create' %}">Add New Task</a>
+    <ul>
+        {% for task in tasks %}
+            <li>
+                <div>
+                    <strong>{{ task.title }}</strong> - {{ task.description }}
+                </div>
+                <div class="task-controls">
+                    {% if not task.completed %}
+                        <form action="{% url 'task_update' task.id %}" method="post">
+                            {% csrf_token %}
+                            <input type="checkbox" name="completed" onchange="this.form.submit();" {{ task.completed|yesno:"checked," }}>
+                            <input type="hidden" name="description" value="{{ task.description }}">
+                            <input type="hidden" name="title" value="{{ task.title }}">
+                        </form>
+                    {% endif %}
+                    <a href="{% url 'task_update' task.id %}">Edit</a>
+                    <a href="{% url 'task_detail' task.id %}">Details</a>
+                    <a href="{% url 'task_delete' task.id %}" onclick="return confirm('Are you sure?');">Delete</a>
+                </div>
+            </li>
+        {% empty %}
+            <li>No tasks available.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+</head>
+<body>
+    <h1>Task List</h1>
+    <a href="{% url 'task_create' %}">Add New Task</a>
+    <ul>
+        {% for task in tasks %}
+            <li>
+                <strong>{{ task.title }}</strong> - {{ task.description }}
+                {% if not task.completed %}
+                    <form action="{% url 'task_update' task.id %}" method="post">
+                        {% csrf_token %}
+                        <input type="checkbox" name="completed" onchange="this.form.submit();" {{ task.completed|yesno:"checked," }}>
+                        <input type="hidden" name="description" value="{{ task.description }}">
+                        <input type="hidden" name="title" value="{{ task.title }}">
+                    </form>
+                {% endif %}
+                <a href="{% url 'task_update' task.id %}">Edit</a>
+                <a href="{% url 'task_delete' task.id %}" onclick="return confirm('Are you sure?');">Delete</a>
+            </li>
+        {% empty %}
+            <li>No tasks available.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html> -->
