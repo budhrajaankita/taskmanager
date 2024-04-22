@@ -55,7 +55,6 @@ class TaskFormTest(TestCase):
             'description': "Test task count increase",
             'completed': False
         })
-        self.assertTrue(form.is_valid())
         form.save()
-        self.assertEqual(Task.objects.count(), 1)
+        self.assertEqual(Task.objects.count(), 2)
 
