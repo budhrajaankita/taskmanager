@@ -1,16 +1,9 @@
-from django.urls import reverse
 from django.test import TestCase
 from .models import Task
 
-class TaskTests(TestCase):
-
+class TaskModelTest(TestCase):
     def test_task_creation(self):
-        task = Task.objects.create(
-            title='Test Task',
-            description='Test Description',
-            priority=2,
-        )
-        self.assertEqual(task.title, 'Test Task')
-        self.assertEqual(task.description, 'Test Description')
-        self.assertEqual(task.priority, 2)
-
+        task = Task.objects.create(title="Sample Task", description="Sample Description", completed=False)
+        self.assertEqual(task.title, "Sample Task")
+        self.assertEqual(task.description, "Sample Description")
+        self.assertFalse(task.completed)
