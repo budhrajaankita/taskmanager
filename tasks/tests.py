@@ -27,6 +27,14 @@ class TaskListViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
 
 
+    def test_view_uses_correct_template(self):
+        response = self.client.get(reverse('task_list'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'tasks/task_list.html')
+
+
+
+
 
 # class TaskFormTest(TestCase):
 #     def test_form_validity(self):
