@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.urls import reverse
 from .models import Task
 from .forms import TaskForm
 
@@ -15,6 +16,16 @@ class TaskModelTest(TestCase):
 
     def test_task_string_representation(self):
         self.assertEqual(str(self.task), self.task.title)
+
+
+class TaskListViewTest(TestCase):
+    def setUp(self):
+        self.task = Task.objects.create(title="List View Task", description="List Test", completed=True)
+
+    def test_view_url_accessible_by_name(self):
+        response = self.client.get(reverse('task_list'))
+        self.assertEqual(response.status_code, 200)
+
 
 
 # class TaskFormTest(TestCase):
